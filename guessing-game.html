@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ski Number Guessing Game</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: url('https://images.unsplash.com/photo-1516569422535-d07a0440b4c4?auto=format&fit=crop&w=1400&q=80') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+      text-align: center;
+      padding: 50px;
+    }
+
+    .game-box {
+      background: rgba(0, 0, 0, 0.7);
+      padding: 30px;
+      border-radius: 12px;
+      max-width: 500px;
+      margin: auto;
+      position: relative;
+    }
+
+    input[type="number"], select {
+      padding: 8px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: none;
+      margin: 10px 5px;
+    }
+
+    button {
+      padding: 8px 16px;
+      margin-top: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      background-color: #00bcd4;
+      border: none;
+      border-radius: 5px;
+      color: white;
+    }
+
+    #message {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+
+    a.back-link {
+      display: inline-block;
+      margin-top: 20px;
+      color: #fff;
+      text-decoration: underline;
+    }
+
+    #best-score {
+      margin-top: 15px;
+      font-style: italic;
+      color: #ccc;
+    }
+  </style>
+</head>
+<body>
+  <div class="game-box">
+    <h1>🎿 Ski Number Guessing Game</h1>
+    <label for="difficulty">Choose Difficulty:</label>
+    <select id="difficulty" onchange="setDifficulty(this.value)">
+      <option value="20">Easy (1–20)</option>
+      <option value="50">Medium (1–50)</option>
+      <option value="100">Hard (1–100)</option>
+    </select>
+    <p>Guess a number between <span id="range-label">1 and 20</span>:</p>
+    <input type="number" id="guess" min="1" max="20" />
+    <button onclick="checkGuess()">Guess</button>
+    <p id="message"></p>
+    <p id="best-score"></p>
+    <a href="scratch.html" class="back-link">← Back to Scratch Page</a>
+  </div>
+
+  <script>
+    let max = 20;
+    let secretNumber = generateNumber(max);
+    let attempts = 0;
+
+    const message = document.getElementById("message");
+    const bestScoreDisplay = document.getElementById("best-score");
+
+    const lowHints = [
+      "That guess wouldn’t even make it up the bunny hill 🐰",
+      "Try aiming higher, mountain goat! 🧗‍♀️",
+      "You're skiing in the parking lot! ⛷️"
+    ];
+    const highHints = [
+      "That number’s skiing off a cliff! 🏔️",
+      "Whoa, slow down, speed racer! ⛷️",
+      "Careful, avalanche territory! ❄️"
+    ];
+
+    function generateNumber(max) {
+      return Math.floor(Math.random() * max) + 1;
+    }
+
+    function setDifficulty(value) {
+      max = parseInt(value);
+      document.getElementById("range-label").textContent = `1 and ${max}`;
+      document.getElementById("guess").max = max;
+      resetGame();
+    }
+
+    function resetGame() {
+      secretNumber = generateNumber(max);
+      attempts = 0;
+      message.textContent = "";
+      document.getElementById("guess").value = "";
+      updateBestScoreDisplay();
+    }
+
+    function checkGuess() {
+      const userGuess = Number(document.getElementById('guess').value);
+      attempts++;
+
+      if (!userGuess || userGuess < 1 || userGuess > max) {
+        message.textContent = `⛔ Please enter a number between 1 and ${max}!`;
+        return;
+      }
+
+      if (userGuess === secretNumber) {
+        message.textContent = `🎉 You got it in ${attempts} tries! The number was ${secretNumber}.`;
+
+        if (userGuess === 7) {
+          message.textContent += " 🪄 You found the magical number 7! 🐱⛷️";
+        }
+
+        const bestKey = `best-${max}`;
+        const best = localStorage.getItem(bestKey);
+        if (!best || attempts < best) {
+          localStorage.setItem(bestKey, attempts);
+          bestScoreDisplay.textContent = `🏆 New Best Score: ${attempts} tries!`;
+        }
+
+      } else {
+        const hint = userGuess < secretNumber
+          ? lowHints[Math.floor(Math.random() * lowHints.length)]
+          : highHints[Math.floor(Math.random() * highHints.length)];
+        message.textContent = hint;
+      }
+    }
+
+    function updateBestScoreDisplay() {
+      const best = localStorage.getItem(`best-${max}`);
+      if (best) {
+        bestScoreDisplay.textContent = `⏱️ Best Score for ${max}: ${best} tries`;
+      } else {
+        bestScoreDisplay.textContent = "";
+      }
+    }
+
+    updateBestScoreDisplay();
+  </script>
+</body>
+</html>

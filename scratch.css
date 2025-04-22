@@ -1,0 +1,89 @@
+/* Background color (already added) */
+body {
+    background-color: #e8eeef;
+    font-family: 'Arial', sans-serif;
+    color: #333;
+  }
+  
+  /* Heading style */
+  h1 {
+    font-size: 2.5rem;
+    color: #142535;
+  }
+  
+  /* Link style */
+  a {
+    color: #00796b;
+    text-decoration: none;
+  }
+  
+  a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Div styling */
+  #ski-image, #youtube-video, #types-of-skiing {
+    padding: 20px;
+    margin: 20px auto;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 12px;
+    max-width: 800px;
+    text-align: center;
+  }
+  #skipic img {
+    text-align: center;
+    margin: 20px;
+  }
+  
+  #skipic img {
+    width: 30%; 
+    border-radius: 20px;
+  }
+  #youtubevideo {
+    text-align: center;
+    margin: 20px;
+  }
+  
+  #youtubevideo iframe {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+  }
+  #list-section {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    margin: 20px;
+    max-width: 800px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  #list-section ul {
+    list-style-type: square;
+    padding-left: 20px;
+  }
+  
+  #list-section h2 {
+    color: #1e88e5;
+  }
+  
+  #tableau-graph {
+    padding: 20px;
+    margin: 20px auto;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 12px;
+    max-width: 800px;
+    text-align: center;
+  }
+  .tableau-container {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    overflow: hidden;
+  }
+  
+  .tableau-container object {
+    width: 100% !important;
+    height: 500px !important;
+  }
+  
